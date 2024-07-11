@@ -13,7 +13,7 @@ def StochasticSIR_mnrn(N,I_0,R_0,t_0,tmax,iter,threshold):
 
     def infection_rate(t):
         #change the 4 to 10 to get the data for Figure 2A
-        beta=(4+5*np.cos((math.pi/(6*30))*t-0))/30
+        beta=(10+5*np.cos((math.pi/(6*30))*t-0))/30
         return beta*S[-1]*I[-1]/N
 
     def recovery_rate(t):
@@ -71,9 +71,10 @@ times=np.linspace(0,1080,37)
 SER=np.concatenate((probs,probs,probs))
 SER=np.append(SER,probs[0])
 
-with open('Figure1/SERM100.csv', 'w') as f:
-    writer=csv.writer(f)
+#save SER as a csv
+with open('Figure2/SER_b0_10_M100.csv', mode='w') as file:
+    writer = csv.writer(file)
     writer.writerow(['Time','SER'])
-    for v in range(len(SER)):
-        writer.writerow([times[v],SER[v]])
-
+    for i in range(37):
+        writer.writerow([times[i],SER[i]])
+        
