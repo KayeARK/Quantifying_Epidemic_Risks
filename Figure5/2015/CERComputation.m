@@ -74,20 +74,6 @@ CER=u(0:365);
 save('CERFeltre2015.mat','CER','IER','t','solt','solv','fit')
 
 
-figure(1)
-plot(solt,solv)
-hold on
-plot(solt_d,fit)
-legend('Sol','Fit')
-
-figure(2)
-plot(t,IER)
-
-figure(3)
-plot(linspace(0,365,366),CER, 'LineWidth', 2)
-hold on
-plot(t,IER)
-
 
 function sse = sseval(x,tdata,ydata)
 A = x(1);
