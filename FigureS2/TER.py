@@ -52,4 +52,4 @@ for b1 in [9,6,3,0]:
     parray=list(reversed(parray))
     Results=np.vstack((Results,parray))
 
-np.savetxt("SIRModelVarying/Results/TransmissionStrength/Varyb1/TERk100.csv", Results, delimiter=",")
+np.savetxt("FigureS2/TERk100.csv", Results, delimiter=",")

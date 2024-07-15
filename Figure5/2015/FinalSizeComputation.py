@@ -1,9 +1,3 @@
-#modified gillespie for time varying rates (as per Purtan+Udrea 2013, my 2022 paper, and House 
-#2013, how big is an outbreak likely to be?)
-#called mnrm
-
-#idea: solve deterministic dynamics to find the number of E, L, P at the time point. Then introduce one infection
-#and run the stochastic model until the outbreak dies out. Then repeat this process many times and find the probability.
 import numpy as np
 import matplotlib.pyplot as plt
 import scipy.integrate as si 
@@ -51,7 +45,6 @@ def StochasticModel_mnrn(t_0,tmax,iter):
     time=[]
     vector_pops=[]
     for k in range(iter):
-        #print(k)
         #initialise the arrays
         S_v=N_v(t_0)
         E_v=0
@@ -62,9 +55,6 @@ def StochasticModel_mnrn(t_0,tmax,iter):
         t=t_0
 
         while (t<tmax) & (I+E_v+I_v>0):
-            #time.append(t)
-            #vector_pops.append(S_v+E_v+I_v)
-            #print(t)
 
             rand_1=np.random.uniform(0,1)
             rand_1=-np.log(rand_1)
@@ -172,12 +162,3 @@ for p in t_array:
     with open('ReplicatingGuzzetta2016/TERFeltre/final_size2015.csv', mode='a') as file:
         writer = csv.writer(file)
         writer.writerow(final_size)
-
-
-    
-
-
-
-
-
-

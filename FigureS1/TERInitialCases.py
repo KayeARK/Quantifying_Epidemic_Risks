@@ -57,17 +57,10 @@ times=np.round(np.linspace(0,t_max,math.floor(t_max/delta_t)),2)
 parray=matrixSIR_vary(N,k,t_max,delta_t)
 
 parray=np.fliplr(parray)
-#parray=parray[:,-1-20:-1]
 parray=parray[:,-1-100:-1]
 
 parray=np.vstack(parray)
 parray=np.transpose(parray)
-# plt.plot(times,parray)
-# plt.xlim(0,360)
-# plt.ylim(0,1)
-# plt.xlabel('Time (days)')
-# plt.ylabel('Probability of Exceeding Threshold')
-# plt.show()
 
 #save as csv with time as first column and number of initial infectious people (100 through to 0) as the first row
 print(parray)

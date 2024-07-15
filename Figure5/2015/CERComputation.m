@@ -41,6 +41,7 @@ t=linspace(1,365,366);
 
 RVH=k*beta_h./mv(t);
 RHV=k*beta_v*g*(lv./(lv+mv(t))).*(bestx(1)*bestx(5).^((-(1/bestx(3)).*(t-bestx(2)).^2)).*(1+erf((1/bestx(4))*(t-bestx(2)))))/H;
+R0=RVH.*RHV;
 IER=(RHV.*RVH-1)./(RHV.*RVH+RVH);
 IER=max(0,IER);
 
@@ -71,7 +72,7 @@ tinitmat=linspace(0,730,25);
 [u, v, w] = solvebvp(N, rhs, options);
 
 CER=u(0:365);
-save('CERFeltre2015.mat','CER','IER','t','solt','solv','fit')
+save('CERFeltre2015.mat','CER','IER','t','solt','solv','fit','R0')
 
 
 

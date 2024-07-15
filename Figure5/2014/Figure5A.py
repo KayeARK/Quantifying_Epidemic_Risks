@@ -1,37 +1,63 @@
+import csv
 import numpy as np
-import pandas as pd
-from scipy.optimize import curve_fit
 import matplotlib.pyplot as plt
-import math
+import scipy
 
-td=pd.read_csv('Figure5/2014/Feltre2014.csv')
-t_fit=td.iloc[90:328,1]
-times_pre=np.linspace(0,90,100)
-times_post=np.linspace(90,365,100)
-td=td.iloc[0:328,1]
-td=td.to_numpy()
-times=np.linspace(0,327,328)
+mat=scipy.io.loadmat('Figure5/2014/CERFeltre2014.mat')
 
-#Fit a cos curve with period of 365 to the data
-def cos_fit(x,a,b,c):
-    return a*np.cos((2*math.pi/(365))*x+b)+c
+CER=mat['CER']
+CER=CER[0]
+t=mat['t']
+t=t[0]
+solv=mat['solv']
+solt=mat['solt']
+fit=mat['fit']
+R0=mat['R0']
 
-popt,pcov=curve_fit(cos_fit,times,td)
+p100=[]
+p50=[]
+p20=[]
+p10=[]
+p5=[]
+with open("Figure5/2014/final_size2014.csv", 'r') as file:
+    csvreader = csv.reader(file)
+    for row in csvreader:
+        finalSizeArr = row
+        finalSizeArr=np.array(finalSizeArr,dtype=float)
+        p100.append(np.sum(finalSizeArr>=100)/10000)
+        p50.append(np.sum(finalSizeArr>=50)/10000)
+        p20.append(np.sum(finalSizeArr>=20)/10000)
+        p10.append(np.sum(finalSizeArr>=10)/10000)
+        p5.append(np.sum(finalSizeArr>=5)/10000)
 
-print(popt)
+times=[0,30,61,91,122,153,183,214,244,275,306,334]
 
-#Plot the data and the fit
-l_t=np.linspace(0,454,456)
-
-whole_fit=cos_fit(times,popt[0],popt[1],popt[2])
-
-plt.plot(times,td)
-plt.plot(l_t,cos_fit(l_t,popt[0],popt[1],popt[2]))
-plt.xticks([0,31,59,90,120,151,181,212,243,273,304,334,365,393,424],['Jan','','Mar','','May','','Jul','','Sep','','Nov','','Jan','','Mar'],fontsize=13)
-plt.ylabel('Temperature ($^{\circ}$C)',fontsize=14)
-plt.xlabel('Date (2014-15)',fontsize=14)
-plt.ylim(-5,35)
-plt.xlim(0,454)
+fig, ax1 = plt.subplots()
+ax1.scatter(times,p5)
+plt.plot(times,p5,label='_nolegend_')
+plt.scatter(times,p10)
+plt.plot(times,p10,label='_nolegend_')
+plt.scatter(times,p20)
+plt.plot(times,p20,label='_nolegend_')
+plt.scatter(times,p50)
+plt.plot(times,p50,label='_nolegend_')
+plt.scatter(times,p100)
+plt.plot(times,p100,label='_nolegend_')
+plt.plot(t,CER,color='black')
+plt.legend(['TER, $T=5$','TER, $T=10$','TER, $T=20$','TER, $T=50$','TER, $T=100$','CER'],fontsize=13)
+plt.ylabel('Epidemic risk',fontsize=14)
+plt.xlim(-10,t[-1])
+plt.xticks(times,['Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar'],fontsize=13)
 plt.yticks(fontsize=14)
+plt.ylim(0,0.7)
+plt.xlabel('Date of introduction (2014-15)',fontsize=14)
+left, bottom, width, height = [0.2, 0.65, 0.2, 0.2]
+ax2 = fig.add_axes([left, bottom, width, height])
+ax2.plot(t,np.transpose(R0), color='green')
+plt.xlim(0,366)
+plt.ylabel("$R_{0}$")
+plt.ylim(0,2)
+plt.plot([0,366],[1,1],'k--')
+plt.xticks([0,334],['Apr','Mar'])
 plt.savefig('Figure5/2014/Figure5A.pdf', bbox_inches='tight')
 plt.show()

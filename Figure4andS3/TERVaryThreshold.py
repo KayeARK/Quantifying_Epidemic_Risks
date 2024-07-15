@@ -69,11 +69,3 @@ plt.figure(figsize=(10,5))
 plt.plot(times,TER[0,1,:])
 plt.xlim([0,30*12*2])
 plt.show()
-
-
-
-
-
-
-
-

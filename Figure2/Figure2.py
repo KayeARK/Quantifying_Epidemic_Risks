@@ -82,10 +82,7 @@ R0_=R0(5,4,TimeCER)
 
 fig, ax1 = plt.subplots()
 ax1.plot(TimeCER,CER, label='CER',color='#1f77b4')
-# plt.plot(TimeIER,IER, label='IER',color='#ff7f0e')
 ax1.plot(TimeTER,TER, label='TER (numerical)',color='#ff7f0e')
-# #plt.plot(TimeTIER,TIER, label='TIER',color='#d62728')
-# #plt.plot(TimeMatTIER,MatTIER, label='MTIER',color='#9467bd')
 plt.scatter(TimeSER,SER, label='TER (simulated)',color='#ff7f0e',s=15)
 plt.legend(fontsize=14)
 plt.xlabel('Time of introduction (months)',fontsize=14)
@@ -106,5 +103,3 @@ plt.yticks(np.arange(0, 5, 1))
 plt.xticks(np.arange(0, 25, 6))
 plt.savefig('Figure2/Figure2B.pdf',bbox_inches='tight')
 plt.show()
-
-
