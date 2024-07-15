@@ -9,6 +9,8 @@ def R0(b1,b0,time):
     R0=beta/gamma
     return R0
 
+#TER.py needs running to generate the TERk100.csv file. This is a large file and so is not included in
+#the repository.
 TER = pd.read_csv('Figure3/TERk100.csv')
 TER=TER.iloc[0:22,:]
 TER=TER.to_numpy()
